@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient/';
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 
 	import Button from 'src/components/buttons/fillButton/component.svelte';
 
@@ -9,23 +7,7 @@
 	let email: string;
 	let password: string;
 
-	onMount(() => {
-		console.log($page.data);
-	});
-
 	const handleLogin = async () => {
-		// try {
-		//   loading = true
-		//   const { error } = await supabase.auth.signInWithOtp({ email })
-		//   if (error) throw error
-		//   alert('Check your email for the login link!')
-		// } catch (error) {
-		//   if (error instanceof Error) {
-		//     alert(error.message)
-		//   }
-		// } finally {
-		//   loading = false
-		// }
 		try {
 			loading = true;
 			const { error } = await supabase.auth.signUp({ email, password });
