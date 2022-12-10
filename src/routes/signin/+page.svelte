@@ -45,15 +45,15 @@
 	};
 </script>
 
-<div class="flex flex-col p-5 items-center">
+<div class="p-5">
 	<h1 class="text-3xl font-bold underline text-white text-center mb-6">
 		Supabase + SvelteKit Trial !
 	</h1>
-	<div class="flex flex-col gap-y-5">
+	<div class="flex flex-col gap-y-5 max-w-sm mx-auto">
 		<form on:submit|preventDefault={handleMagicLogin}>
 			<div class="flex flex-col gap-y-4">
 				<div class="flex flex-col gap-y-2">
-					<p class="text-white">Sign in via magic link with your email below</p>
+					<p class="text-white">★ Sign in via magic link with your email below</p>
 					<div>
 						<input class="p-1 w-full" type="email" placeholder="Your email" bind:value={magicEmail} />
 					</div>
@@ -73,7 +73,7 @@
 		<form on:submit|preventDefault={handleLogin}>
 			<div class="flex flex-col gap-y-4">
 				<div class="flex flex-col gap-y-2">
-					<p class="text-white">Sign in with your email & password</p>
+					<p class="text-white">Sign in with your email & password (Legacy)</p>
 					<div>
 						<input class="w-full p-1" type="email" placeholder="Your email" bind:value={email} />
 					</div>
@@ -90,7 +90,7 @@
 						disabled={false}
 					/>
 					<p class="text-white">or</p>
-					<a href="/signup">
+					<a href="/signup" class="w-full">
 						<Button
 							text="sign up"
 							type="button"
