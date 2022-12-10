@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/supabaseClient/';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+
+	import Button from 'src/components/buttons/fillButton/component.svelte';
 
 	let loading = false;
 	let email: string;
@@ -39,23 +41,32 @@
 	};
 </script>
 
-<form class="row flex-center flex" on:submit|preventDefault={handleLogin}>
-	<div class="col-6 form-widget">
-		<h1 class="header">Supabase + SvelteKit</h1>
-		<p class="description">Sign in via magic link with your email below</p>
-		<div>
-			<input class="inputField" type="email" placeholder="Your email" bind:value={email} />
-		</div>
-		<div>
-			<input class="inputField" type="password" placeholder="password" bind:value={password} />
-		</div>
-		<div>
-			<input
-				type="submit"
-				class="button block"
-				value={loading ? 'Loading' : 'Sign up'}
-				disabled={loading}
-			/>
-		</div>
+<div class="flex flex-col p-5 items-center">
+	<h1 class="text-3xl font-bold underline text-white text-center mb-6">
+		Supabase + SvelteKit Trial !
+	</h1>
+	<div class="flex flex-col gap-y-5">
+		<form on:submit|preventDefault={handleLogin}>
+			<div class="flex flex-col gap-y-4">
+				<div class="flex flex-col gap-y-2">
+					<p class="text-white">Sign up email & password</p>
+					<div>
+						<input class="w-full p-1" type="email" placeholder="Your email" bind:value={email} />
+					</div>
+					<div>
+						<input class="w-full p-1" type="password" placeholder="password" bind:value={password} />
+					</div>
+				</div>
+				<div>
+					<Button
+						text="sign up"
+						type="submit"
+						bgColor="green"
+						clickHandler={() => undefined}
+						disabled={false}
+					/>
+				</div>
+			</div>
+		</form>
 	</div>
-</form>
+</div>

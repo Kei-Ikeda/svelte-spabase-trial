@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import type { AuthSession } from '@supabase/supabase-js';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/supabaseClient/';
+	import Avatar from './Avatar.svelte';
 
-	export let session: AuthSession;
+	export let session: AuthSession = $page.data.session;
 
 	let loading = false;
-	let username: string | null = null;
-	let website: string | null = null;
-	let avatarUrl: string | null = null;
+	let username: string;
+	let website: string;
+	let avatarUrl: string;
 
 	onMount(() => {
 		getProfile();
@@ -96,6 +98,7 @@
 </script>
 
 <form class="form-widget" on:submit|preventDefault={updateProfile}>
+	<Avatar bind:url={avatarUrl} size={10} on:upload={updateProfile} />
 	<div>
 		<label for="email">Email</label>
 		<input id="email" type="text" value={session.user.email} disabled />
@@ -121,7 +124,7 @@
 	<div>
 		<button class="button block" on:click={signOut} disabled={loading}>Sign Out</button>
 	</div>
-  <div>
+	<div>
 		<button class="button block" on:click={initPassword} disabled={loading}>init password</button>
 	</div>
 </form>

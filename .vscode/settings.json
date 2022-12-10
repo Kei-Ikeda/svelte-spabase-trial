@@ -1,0 +1,13 @@
+{
+  "editor.colorDecorators": false,
+  // https://github.com/tailwindlabs/tailwindcss/issues/7553#issuecomment-735915659
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "class=\\{`(.*)\\(.*)\\`\\}",
+      "class=\\{\"(.*)\\(.*)\\\"\\}",
+      "class=\\\"(.*)\\(.*)\""
+    ]
+  ],
+  // https://redpixelthemes.com/blog/change-tailwindcss-base-font-size/#:~:text=The%20current%20Tailwind%20CSS%20base,most%20popular%20browsers%20like%20Chrome.
+  "tailwindCSS.rootFontSize": 14
+}

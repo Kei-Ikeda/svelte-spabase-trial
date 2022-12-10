@@ -1,10 +1,18 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/supabaseClient/';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+
+	import Button from 'src/components/buttons/fillButton/component.svelte';
 
 	let loading = false;
 	let email: string;
 	let magicEmail: string;
 	let password: string;
+
+	$: {
+		$page.data.session && goto('/account')
+	}
 
 	const handleLogin = async () => {
 		try {
@@ -37,51 +45,64 @@
 	};
 </script>
 
-<div class="text-center">
-	<h1 class="header">Supabase + SvelteKit</h1>
-</div>
+<div class="flex flex-col p-5 items-center">
+	<h1 class="text-3xl font-bold underline text-white text-center mb-6">
+		Supabase + SvelteKit Trial !
+	</h1>
+	<div class="flex flex-col gap-y-5">
+		<form on:submit|preventDefault={handleMagicLogin}>
+			<div class="flex flex-col gap-y-4">
+				<div class="flex flex-col gap-y-2">
+					<p class="text-white">Sign in via magic link with your email below</p>
+					<div>
+						<input class="p-1 w-full" type="email" placeholder="Your email" bind:value={magicEmail} />
+					</div>
+				</div>
+				<div>
+					<Button
+						text="sign in"
+						type="submit"
+						bgColor="green"
+						clickHandler={() => undefined}
+						disabled={false}
+					/>
+				</div>
+			</div>
+		</form>
 
-<form class="row flex-center flex" on:submit|preventDefault={handleMagicLogin}>
-	<div class="col-6 form-widget">
-		<p class="description">Sign in via magic link with your email below</p>
-		<div>
-			<input class="inputField" type="email" placeholder="Your email" bind:value={magicEmail} />
-		</div>
-		<div>
-			<input
-				type="submit"
-				class="button block"
-				value={loading ? 'Loading' : 'send magic link'}
-				disabled={loading}
-			/>
-		</div>
+		<form on:submit|preventDefault={handleLogin}>
+			<div class="flex flex-col gap-y-4">
+				<div class="flex flex-col gap-y-2">
+					<p class="text-white">Sign in with your email & password</p>
+					<div>
+						<input class="w-full p-1" type="email" placeholder="Your email" bind:value={email} />
+					</div>
+					<div>
+						<input class="w-full p-1" type="password" placeholder="password" bind:value={password} />
+					</div>
+				</div>
+				<div class="flex gap-x-4 items-center">
+					<Button
+						text="sign in"
+						type="submit"
+						bgColor="green"
+						clickHandler={() => undefined}
+						disabled={false}
+					/>
+					<p class="text-white">or</p>
+					<a href="/signup">
+						<Button
+							text="sign up"
+							type="button"
+							bgColor={undefined}
+							clickHandler={() => undefined}
+							disabled={false}
+						/>
+					</a>
+				</div>
+			</div>
+		</form>
 	</div>
-</form>
-
-<form class="row flex-center flex" on:submit|preventDefault={handleLogin}>
-	<div class="col-6 form-widget">
-		<p class="description">Sign in with your email & password</p>
-		<div>
-			<input class="inputField" type="email" placeholder="Your email" bind:value={email} />
-		</div>
-		<div>
-			<input class="inputField" type="password" placeholder="password" bind:value={password} />
-		</div>
-		<div>
-			<input
-				type="submit"
-				class="button block"
-				value={loading ? 'Loading' : 'Sign In'}
-				disabled={loading}
-			/>
-		</div>
-	</div>
-</form>
-<div>or</div>
-<div>
-	<a href="/signup">
-		<button type="button" class="" value={'Sign up'}>signup</button>
-	</a>
 </div>
 
 <style>
