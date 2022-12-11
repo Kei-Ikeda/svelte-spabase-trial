@@ -1,22 +1,23 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import type { AuthSession } from '@supabase/supabase-js';
+	// import type { AuthSession } from '@supabase/supabase-js';
 	import { supabase } from '$lib/supabaseClient/';
 	import Avatar from './Avatar.svelte';
 
-	export let session: AuthSession = $page.data.session;
+	export let session = $page.data.session;
 
 	let loading = false;
-	let username: string;
-	let website: string;
-	let avatarUrl: string;
+	let username: string | null;
+	let website: string | null;
+	let avatarUrl: string | null;
 
 	onMount(() => {
 		getProfile();
 	});
 
 	const getProfile = async () => {
+		if (!session) return;
 		try {
 			loading = true;
 			const { user } = session;
@@ -44,6 +45,7 @@
 	};
 
 	async function updateProfile() {
+		if (!session) return;
 		try {
 			loading = true;
 			const { user } = session;
@@ -53,7 +55,7 @@
 				username,
 				website,
 				avatar_url: avatarUrl,
-				updated_at: new Date()
+				updated_at: String(new Date())
 			};
 
 			let { error } = await supabase.from('profiles').upsert(updates);
@@ -97,6 +99,7 @@
 	}
 </script>
 
+{#if session}
 <form class="form-widget" on:submit|preventDefault={updateProfile}>
 	<Avatar bind:url={avatarUrl} size={10} on:upload={updateProfile} />
 	<div>
@@ -128,3 +131,4 @@
 		<button class="button block" on:click={initPassword} disabled={loading}>init password</button>
 	</div>
 </form>
+{/if}

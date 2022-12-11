@@ -3,7 +3,7 @@
   import { supabase } from '$lib/supabaseClient/'
 
   export let size = 10
-  export let url: string
+  export let url: string | null
 
   let avatarUrl: string | null = null
   let uploading = false
@@ -57,6 +57,8 @@
     }
   }
 
+  // urlがあれば画像をダウンロードする
+  // urlが変更されると実行される
   $: if (url) downloadImage(url)
 </script>
 
