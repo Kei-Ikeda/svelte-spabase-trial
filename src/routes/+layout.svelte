@@ -5,7 +5,7 @@
 	import './styles.css';
 	import { page } from '$app/stores';
 	import SignIn from './signin/+page.svelte';
-	import ReactiveTrial from'./ReactiveTrial.svelte';
+	import ReactiveTrial from './ReactiveTrial.svelte';
 
 	onMount(() => {
 		const {
@@ -26,8 +26,8 @@
 	{/if}
 	{#if $page.url.pathname !== '/signup'}
 		{#if !$page.data.session}
-			<SignIn />
 			<ReactiveTrial />
+			<SignIn />
 		{:else}
 			<slot />
 		{/if}

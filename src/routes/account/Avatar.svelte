@@ -62,15 +62,15 @@
   $: if (url) downloadImage(url)
 </script>
 
-<div>
+<div class="flex flex-col gap-y-4">
   {#if avatarUrl} <img src={avatarUrl} alt={avatarUrl ? 'Avatar' : 'No image'} class="avatar image"
   style="height: {size}em; width: {size}em;" /> {:else}
   <div class="avatar no-image" style="height: {size}em; width: {size}em;" />
   {/if}
 
-  <div style="width: {size}em;">
-    <label class="button primary block" for="single">
-      {uploading ? 'Uploading ...' : 'Upload'}
+  <div>
+    <label class="text-white bg-blue-500 cursor-pointer rounded py-1 px-2" for="single">
+      {uploading ? 'Uploading ...' : 'Upload your profile image'}
     </label>
     <input
       style="visibility: hidden; position:absolute;"

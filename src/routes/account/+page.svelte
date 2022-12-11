@@ -4,6 +4,10 @@
 	// import type { AuthSession } from '@supabase/supabase-js';
 	import { supabase } from '$lib/supabaseClient/';
 	import Avatar from './Avatar.svelte';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+
+	dayjs.extend(utc)
 
 	export let session = $page.data.session;
 
@@ -55,7 +59,7 @@
 				username,
 				website,
 				avatar_url: avatarUrl,
-				updated_at: String(new Date())
+				updated_at: dayjs().format()
 			};
 
 			let { error } = await supabase.from('profiles').upsert(updates);
@@ -100,35 +104,46 @@
 </script>
 
 {#if session}
-<form class="form-widget" on:submit|preventDefault={updateProfile}>
-	<Avatar bind:url={avatarUrl} size={10} on:upload={updateProfile} />
-	<div>
-		<label for="email">Email</label>
-		<input id="email" type="text" value={session.user.email} disabled />
-	</div>
-	<div>
-		<label for="username">Name</label>
-		<input id="username" type="text" bind:value={username} />
-	</div>
-	<div>
-		<label for="website">Website</label>
-		<input id="website" type="website" bind:value={website} />
-	</div>
+	<div class="p-5">
+		<h1 class="text-3xl font-bold underline text-white text-center mb-6">
+			Account Settings
+		</h1>
+		<div class="flex flex-col gap-y-5 max-w-sm mx-auto">
+			<form class="form-widget" on:submit|preventDefault={updateProfile}>
+				<div class="flex flex-col gap-y-4">
+					<Avatar bind:url={avatarUrl} size={10} on:upload={updateProfile} />
+					<div>
+						<label class="text-white" for="email">Email</label>
+						<input class="p-1" id="email" type="text" value={session.user.email} disabled />
+					</div>
+					<div>
+						<label class="text-white" for="username">Name</label>
+						<input class="p-1" id="username" type="text" bind:value={username} />
+					</div>
+					<div>
+						<label class="text-white" for="website">Your website URL</label>
+						<input class="p-1" id="website" type="website" bind:value={website} />
+					</div>
 
-	<div>
-		<input
-			type="submit"
-			class="button block primary"
-			value={loading ? 'Loading...' : 'Update'}
-			disabled={loading}
-		/>
-	</div>
+					<div>
+						<input
+							type="submit"
+							class="text-white bg-blue-500 cursor-pointer rounded py-1 px-2"
+							value={loading ? 'Loading...' : 'Update your profile'}
+							disabled={loading}
+						/>
+					</div>
 
-	<div>
-		<button class="button block" on:click={signOut} disabled={loading}>Sign Out</button>
+					<div>
+						<button class="text-white bg-red-500 cursor-pointer rounded py-1 px-2" on:click={signOut} disabled={loading}>Sign Out</button>
+					</div>
+					<div>
+						<button class="text-white bg-orange-500 cursor-pointer rounded py-1 px-2" on:click={initPassword} disabled={loading}
+							>init password to "12345678"</button
+						>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
-	<div>
-		<button class="button block" on:click={initPassword} disabled={loading}>init password</button>
-	</div>
-</form>
 {/if}

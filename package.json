@@ -40,6 +40,8 @@
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.8.6",
 		"@supabase/supabase-js": "^2.1.1",
+		"dayjs": "^1.11.7",
+		"dayjs-plugin-utc": "^0.1.2",
 		"felte": "^1.2.6"
 	}
 }

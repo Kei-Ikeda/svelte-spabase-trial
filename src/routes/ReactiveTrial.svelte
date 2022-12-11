@@ -26,15 +26,15 @@
 		}
 	});
 
-  const initState = (_e: MouseEvent) => {
-    count = 0;
-    disabled = true;
-    canNotSelectEnableDecrementButton = true;
-    isDirty.set(false);
-  }
+	const initState = (_e: MouseEvent) => {
+		count = 0;
+		disabled = true;
+		canNotSelectEnableDecrementButton = true;
+		isDirty.set(false);
+	};
 
 	$: {
-		if ($isDirty && !$errors.password) {
+		if ($isDirty && $data?.password.length >=8 && !$errors.password) {
 			canNotSelectEnableDecrementButton = false;
 		}
 		if ($isDirty && $errors.password) {
@@ -90,12 +90,11 @@
 </script>
 
 <div class="p-5">
-	<h1 class="text-3xl font-bold underline text-white text-center mb-4">Reactive trial !</h1>
+	<h1 class="text-3xl font-bold underline text-white text-center mb-4">Svelte Reactive trial !</h1>
 	<div class="flex flex-col items-center gap-y-4 max-w-sm mx-auto">
 		<section class="w-full">
 			<div class="flex flex-col gap-y-4 w-full">
 				<div class="flex flex-col gap-y-2">
-					<h2 class="text-white font-bold text-xl">Reactive trial</h2>
 					<p class="text-white">count:<span class="inline-block pl-2">{count}</span></p>
 					<p class="text-white">
 						countDoubled(max ±10):<span
@@ -125,7 +124,8 @@
 					</div>
 					{#if disabled && (countDoubled === 10 || countDoubled === -10)}
 						<p class="text-red-500">
-							Oops! countDoubled reached MAX.<br />Defuse password is "01020304".
+							Oops! countDoubled reached MAX.<br />Please enter the following password "0102030" and press submit button.<br
+							/> Add 1 character '9' for last when the validation message appears.<br>Finally, select "Defuse exec" and press submit button, May be decrement button enabled.
 						</p>
 					{/if}
 				</div>
@@ -180,11 +180,11 @@
 							/>
 						</div>
 					</form>
-				{/if}
 				<div class="flex flex-col items-start gap-y-2">
 					<p class="text-white">Real time form data</p>
 					<textarea value={JSON.stringify($data)} class="text-xs p-1 w-full h-20" />
 				</div>
+        {/if}
 			</div>
 		</section>
 		<section class="w-full">

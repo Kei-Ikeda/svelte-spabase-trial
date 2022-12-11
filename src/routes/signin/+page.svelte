@@ -11,7 +11,7 @@
 	let password: string;
 
 	$: {
-		$page.data.session && goto('/account')
+		$page.data.session && goto('/account', { replaceState: true });
 	}
 
 	const handleLogin = async () => {
@@ -19,7 +19,6 @@
 			loading = true;
 			const { error } = await supabase.auth.signInWithPassword({ email, password });
 			if (error) throw error;
-			alert('Check your email for the login link!');
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(error.message);
@@ -55,7 +54,12 @@
 				<div class="flex flex-col gap-y-2">
 					<p class="text-white">★ Sign in via magic link with your email below</p>
 					<div>
-						<input class="p-1 w-full" type="email" placeholder="Your email" bind:value={magicEmail} />
+						<input
+							class="p-1 w-full"
+							type="email"
+							placeholder="Your email"
+							bind:value={magicEmail}
+						/>
 					</div>
 				</div>
 				<div>
@@ -78,7 +82,12 @@
 						<input class="w-full p-1" type="email" placeholder="Your email" bind:value={email} />
 					</div>
 					<div>
-						<input class="w-full p-1" type="password" placeholder="password" bind:value={password} />
+						<input
+							class="w-full p-1"
+							type="password"
+							placeholder="password"
+							bind:value={password}
+						/>
 					</div>
 				</div>
 				<div class="flex gap-x-4 items-center">
